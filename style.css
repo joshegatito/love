@@ -8,21 +8,52 @@
     box-sizing: border-box;
 }
 
+:root {
+    /* Paleta de colores románticos */
+    --color-primary: #ff1493;
+    --color-secondary: #ff69b4;
+    --color-accent: #8a2be2;
+    --color-light-pink: #ffd1dc;
+    --color-rose: #ffb3d9;
+    --color-purple: #e6b3ff;
+    --color-gold: #ffd700;
+    --color-dark: #1a0033;
+    --color-darker: #0a0015;
+
+    /* Sombras y efectos */
+    --glow-primary: 0 0 20px rgba(255, 105, 180, 0.6);
+    --glow-secondary: 0 0 40px rgba(138, 43, 226, 0.4);
+    --text-shadow-romantic: 0 0 20px rgba(255, 105, 180, 0.8);
+}
+
 body {
     font-family: 'Cormorant Garamond', serif;
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(135deg, #0a0015 0%, #1a0033 25%, #2d1b4e 50%, #1a0033 75%, #0a0015 100%);
+    overflow-x: hidden;
+    background: linear-gradient(135deg, var(--color-darker) 0%, var(--color-dark) 25%, #2d1b4e 50%, var(--color-dark) 75%, var(--color-darker) 100%);
     background-size: 400% 400%;
     animation: nebulaPulse 20s ease infinite;
     color: #fff;
+    min-height: 100vh;
 }
 
 /* Animación de gradiente de fondo tipo nebulosa */
 @keyframes nebulaPulse {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
+}
+
+/* ========================================
+   PARTICLES.JS BACKGROUND
+   ======================================== */
+
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0.6;
 }
 
 /* ========================================
@@ -35,7 +66,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 2;
 }
 
 /* ========================================
@@ -43,22 +74,9 @@ body {
    ======================================== */
 
 .content-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    position: relative;
     z-index: 10;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
     padding: 20px;
-}
-
-.content-overlay > * {
-    pointer-events: auto;
 }
 
 /* ========================================
@@ -67,17 +85,28 @@ body {
 
 .main-title {
     font-family: 'Great Vibes', cursive;
-    font-size: clamp(3rem, 8vw, 7rem);
-    color: #ffd1dc;
+    font-size: clamp(3rem, 10vw, 8rem);
+    color: var(--color-light-pink);
     text-shadow:
-        0 0 20px rgba(255, 105, 180, 0.8),
+        var(--text-shadow-romantic),
         0 0 40px rgba(255, 105, 180, 0.6),
         0 0 60px rgba(255, 105, 180, 0.4),
         0 0 80px rgba(138, 43, 226, 0.3);
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     text-align: center;
     animation: titleGlow 4s ease-in-out infinite;
-    opacity: 0;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.heart-icon-left,
+.heart-icon-right {
+    font-size: 0.5em;
+    color: var(--color-secondary);
+    animation: heartBeat 1.5s ease-in-out infinite;
+    display: inline-block;
+    margin: 0 20px;
 }
 
 @keyframes titleGlow {
@@ -96,82 +125,38 @@ body {
     }
 }
 
-/* ========================================
-   SUBTÍTULO POÉTICO
-   ======================================== */
-
-.subtitle {
-    font-family: 'Crimson Text', serif;
-    font-size: clamp(1rem, 2.5vw, 1.5rem);
-    font-style: italic;
-    color: #e6b3ff;
-    text-shadow: 0 0 15px rgba(186, 85, 211, 0.6);
-    margin-bottom: 2rem;
-    text-align: center;
-    max-width: 600px;
-    line-height: 1.6;
-    opacity: 0;
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.2); }
+    50% { transform: scale(1); }
 }
 
 /* ========================================
-   ANIMACIONES DE FADE-IN
+   SUBTÍTULO CON TYPED.JS
    ======================================== */
 
-.fade-in {
-    animation: fadeInAnimation 2s ease-in forwards;
-    animation-delay: 0.5s;
-}
-
-.fade-in-delay {
-    animation: fadeInAnimation 2s ease-in forwards;
-    animation-delay: 1.5s;
-}
-
-@keyframes fadeInAnimation {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ========================================
-   CONTENEDOR DEL POEMA
-   ======================================== */
-
-.poem-container {
-    margin-bottom: 2.5rem;
+.subtitle-container {
     min-height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.poem-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.1rem, 2.2vw, 1.4rem);
-    font-weight: 300;
+.subtitle {
+    font-family: 'Crimson Text', serif;
+    font-size: clamp(1.2rem, 3vw, 2rem);
     font-style: italic;
-    color: #ffb3d9;
-    text-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
+    color: var(--color-purple);
+    text-shadow: 0 0 15px rgba(186, 85, 211, 0.6);
     text-align: center;
-    max-width: 700px;
+    max-width: 800px;
     line-height: 1.8;
-    letter-spacing: 0.5px;
+    margin: 0 auto;
 }
 
-/* Efecto de cursor parpadeante para typing */
-.poem-text::after {
-    content: '|';
+.typed-cursor {
+    color: var(--color-rose);
     animation: blink 0.7s infinite;
-    margin-left: 2px;
-}
-
-.poem-text.typing-complete::after {
-    content: '';
 }
 
 @keyframes blink {
@@ -180,15 +165,134 @@ body {
 }
 
 /* ========================================
-   BOTÓN ROMÁNTICO
+   SEPARADOR DECORATIVO
    ======================================== */
+
+.divider-romantic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: 1.5rem;
+    color: var(--color-gold);
+}
+
+.divider-romantic i {
+    animation: twinkle 2s ease-in-out infinite;
+}
+
+.divider-romantic i:nth-child(2) {
+    font-size: 2rem;
+    color: var(--color-secondary);
+    animation: heartPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+}
+
+@keyframes heartPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* ========================================
+   POEMA
+   ======================================== */
+
+.poem-container {
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.poem-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-weight: 400;
+    color: var(--color-rose);
+    text-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
+    text-align: center;
+    max-width: 800px;
+    line-height: 2;
+    letter-spacing: 0.5px;
+}
+
+/* ========================================
+   CONTADOR DE AMOR
+   ======================================== */
+
+.love-counter {
+    display: flex;
+    justify-content: center;
+}
+
+.counter-card {
+    background: linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(138, 43, 226, 0.2));
+    border: 2px solid rgba(255, 182, 193, 0.4);
+    border-radius: 30px;
+    padding: 30px 60px;
+    backdrop-filter: blur(15px);
+    box-shadow: var(--glow-primary), var(--glow-secondary);
+    text-align: center;
+    transition: all 0.4s ease;
+}
+
+.counter-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow:
+        0 0 40px rgba(255, 105, 180, 0.8),
+        0 0 80px rgba(138, 43, 226, 0.6);
+}
+
+.counter-icon {
+    font-size: 3rem;
+    color: var(--color-gold);
+    margin-bottom: 15px;
+    animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.counter-number {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 600;
+    color: var(--color-light-pink);
+    text-shadow: var(--text-shadow-romantic);
+    margin: 10px 0;
+    transition: all 0.5s ease;
+}
+
+.counter-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--color-purple);
+    font-style: italic;
+}
+
+/* ========================================
+   BOTONES ROMÁNTICOS
+   ======================================== */
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
 
 .romantic-button {
     position: relative;
-    padding: 18px 45px;
+    padding: 20px 50px;
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.1rem, 2vw, 1.3rem);
-    font-weight: 400;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-weight: 600;
     color: #fff;
     background: linear-gradient(135deg, rgba(255, 105, 180, 0.3), rgba(138, 43, 226, 0.3));
     border: 2px solid rgba(255, 182, 193, 0.6);
@@ -196,149 +300,56 @@ body {
     cursor: pointer;
     overflow: hidden;
     transition: all 0.4s ease;
-    box-shadow:
-        0 0 20px rgba(255, 105, 180, 0.4),
-        inset 0 0 20px rgba(255, 182, 193, 0.1);
+    box-shadow: var(--glow-primary), inset 0 0 20px rgba(255, 182, 193, 0.1);
     backdrop-filter: blur(10px);
     letter-spacing: 1px;
-    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.button-glow {
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
+.romantic-button i {
+    font-size: 1.3em;
+    transition: transform 0.3s ease;
 }
 
 .romantic-button:hover {
-    transform: translateY(-3px) scale(1.05);
-    border-color: rgba(255, 105, 180, 1);
+    transform: translateY(-5px) scale(1.05);
+    border-color: var(--color-secondary);
     box-shadow:
         0 0 40px rgba(255, 105, 180, 0.8),
-        0 5px 25px rgba(138, 43, 226, 0.5),
+        0 5px 30px rgba(138, 43, 226, 0.6),
         inset 0 0 30px rgba(255, 182, 193, 0.2);
 }
 
-.romantic-button:hover .button-glow {
-    opacity: 1;
-    animation: glowPulse 1.5s ease-in-out infinite;
-}
-
-@keyframes glowPulse {
-    0%, 100% { transform: scale(1) rotate(0deg); }
-    50% { transform: scale(1.2) rotate(180deg); }
+.romantic-button:hover i {
+    transform: scale(1.2) rotate(10deg);
 }
 
 .romantic-button:active {
-    transform: translateY(-1px) scale(1.02);
+    transform: translateY(-2px) scale(1.02);
+}
+
+.btn-primary-custom {
+    background: linear-gradient(135deg, rgba(255, 20, 147, 0.4), rgba(255, 105, 180, 0.4));
+}
+
+.btn-secondary-custom {
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.4), rgba(186, 85, 211, 0.4));
 }
 
 /* ========================================
-   MENSAJE SECRETO (MODAL)
+   CONTROLES SOCIALES Y MÚSICA
    ======================================== */
 
-.secret-message {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(15px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    padding: 20px;
-}
-
-.secret-message.show {
+.social-music-controls {
     display: flex;
-    animation: fadeInModal 0.6s ease forwards;
-}
-
-@keyframes fadeInModal {
-    to { opacity: 1; }
-}
-
-.message-content {
-    position: relative;
-    background: linear-gradient(135deg, rgba(26, 0, 51, 0.95), rgba(45, 27, 78, 0.95));
-    padding: clamp(2rem, 5vw, 4rem);
-    border-radius: 30px;
-    border: 2px solid rgba(255, 105, 180, 0.5);
-    box-shadow:
-        0 0 60px rgba(255, 105, 180, 0.6),
-        0 0 100px rgba(138, 43, 226, 0.4),
-        inset 0 0 50px rgba(255, 182, 193, 0.1);
-    max-width: 600px;
-    text-align: center;
-    transform: scale(0.8);
-    animation: scaleIn 0.6s ease forwards;
-}
-
-@keyframes scaleIn {
-    to {
-        transform: scale(1);
-    }
-}
-
-.message-title {
-    font-family: 'Great Vibes', cursive;
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    color: #ffd1dc;
-    text-shadow: 0 0 30px rgba(255, 105, 180, 0.8);
-    margin-bottom: 1.5rem;
-}
-
-.message-text {
-    font-family: 'Crimson Text', serif;
-    font-size: clamp(1.1rem, 2.2vw, 1.4rem);
-    line-height: 2;
-    color: #ffb3d9;
-    text-shadow: 0 0 10px rgba(255, 182, 193, 0.4);
-    margin-bottom: 0;
-}
-
-.close-button {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 105, 180, 0.2);
-    border: 2px solid rgba(255, 182, 193, 0.5);
-    border-radius: 50%;
-    color: #ffd1dc;
-    font-size: 1.5rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
-.close-button:hover {
-    background: rgba(255, 105, 180, 0.4);
-    transform: rotate(90deg);
-    box-shadow: 0 0 20px rgba(255, 105, 180, 0.6);
-}
-
-/* ========================================
-   CONTROL DE MÚSICA
-   ======================================== */
-
-.music-toggle {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
+.control-btn {
     width: 60px;
     height: 60px;
     background: linear-gradient(135deg, rgba(255, 105, 180, 0.3), rgba(138, 43, 226, 0.3));
@@ -348,26 +359,186 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    color: var(--color-light-pink);
     transition: all 0.4s ease;
-    box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+    box-shadow: var(--glow-primary);
     backdrop-filter: blur(10px);
-    z-index: 50;
 }
 
-.music-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 30px rgba(255, 105, 180, 0.7);
-    border-color: rgba(255, 105, 180, 1);
+.control-btn:hover {
+    transform: scale(1.15) rotate(10deg);
+    box-shadow: 0 0 30px rgba(255, 105, 180, 0.8);
+    border-color: var(--color-secondary);
 }
 
-.music-toggle.playing {
+.control-btn.active {
+    background: linear-gradient(135deg, rgba(255, 20, 147, 0.5), rgba(255, 105, 180, 0.5));
     animation: musicPulse 1.5s ease-in-out infinite;
 }
 
 @keyframes musicPulse {
     0%, 100% { box-shadow: 0 0 20px rgba(255, 105, 180, 0.4); }
-    50% { box-shadow: 0 0 40px rgba(255, 105, 180, 0.8); }
+    50% { box-shadow: 0 0 50px rgba(255, 105, 180, 0.9); }
+}
+
+/* ========================================
+   MODALES ROMÁNTICOS (BOOTSTRAP)
+   ======================================== */
+
+.modal-romantic {
+    background: linear-gradient(135deg, rgba(26, 0, 51, 0.98), rgba(45, 27, 78, 0.98));
+    border: 2px solid rgba(255, 105, 180, 0.5);
+    border-radius: 30px;
+    box-shadow:
+        0 0 60px rgba(255, 105, 180, 0.6),
+        0 0 100px rgba(138, 43, 226, 0.4),
+        inset 0 0 50px rgba(255, 182, 193, 0.1);
+    backdrop-filter: blur(20px);
+}
+
+.modal-romantic .modal-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--color-light-pink);
+    text-shadow: var(--text-shadow-romantic);
+}
+
+.modal-romantic .modal-title i {
+    color: var(--color-secondary);
+    margin-right: 15px;
+}
+
+.message-content-modal {
+    position: relative;
+    padding: 30px;
+    text-align: center;
+}
+
+.message-text-modal {
+    font-family: 'Crimson Text', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    line-height: 2.2;
+    color: var(--color-rose);
+    text-shadow: 0 0 10px rgba(255, 182, 193, 0.4);
+    position: relative;
+    z-index: 2;
+}
+
+.quote-icon {
+    font-size: 0.7em;
+    color: var(--color-purple);
+    opacity: 0.6;
+    margin: 0 10px;
+}
+
+/* ========================================
+   CORAZONES FLOTANTES EN MODAL
+   ======================================== */
+
+.floating-hearts-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.floating-hearts-modal i {
+    position: absolute;
+    color: var(--color-secondary);
+    opacity: 0.3;
+    font-size: 2rem;
+    animation: floatHeart 6s ease-in-out infinite;
+}
+
+.floating-hearts-modal i:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.floating-hearts-modal i:nth-child(2) {
+    left: 30%;
+    animation-delay: 1s;
+}
+
+.floating-hearts-modal i:nth-child(3) {
+    left: 50%;
+    animation-delay: 2s;
+}
+
+.floating-hearts-modal i:nth-child(4) {
+    left: 70%;
+    animation-delay: 3s;
+}
+
+.floating-hearts-modal i:nth-child(5) {
+    left: 90%;
+    animation-delay: 4s;
+}
+
+@keyframes floatHeart {
+    0% {
+        transform: translateY(100%) scale(0) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateY(-50%) scale(1) rotate(180deg);
+    }
+    100% {
+        transform: translateY(-100%) scale(0) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* ========================================
+   GALERÍA
+   ======================================== */
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    padding: 20px;
+}
+
+.gallery-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 105, 180, 0.8);
+}
+
+.gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(138, 43, 226, 0.2));
+    border: 2px solid rgba(255, 182, 193, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-rose);
+}
+
+.gallery-placeholder i {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    color: var(--color-secondary);
+}
+
+.gallery-placeholder p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
 }
 
 /* ========================================
@@ -380,11 +551,10 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 5;
+    z-index: 3;
     pointer-events: none;
 }
 
-/* Animación de estrella fugaz */
 @keyframes shootingStar {
     0% {
         transform: translate(0, 0) rotate(-45deg);
@@ -394,7 +564,7 @@ body {
         opacity: 1;
     }
     100% {
-        transform: translate(-1000px, 1000px) rotate(-45deg);
+        transform: translate(-1200px, 1200px) rotate(-45deg);
         opacity: 0;
     }
 }
@@ -404,53 +574,84 @@ body {
    ======================================== */
 
 @media (max-width: 768px) {
-    .content-overlay {
-        padding: 15px;
+    .heart-icon-left,
+    .heart-icon-right {
+        margin: 0 10px;
     }
 
-    .main-title {
-        margin-bottom: 0.5rem;
-    }
-
-    .subtitle {
-        margin-bottom: 1.5rem;
-    }
-
-    .poem-container {
-        min-height: 100px;
-        margin-bottom: 2rem;
+    .buttons-container {
+        flex-direction: column;
+        align-items: center;
     }
 
     .romantic-button {
-        padding: 15px 35px;
+        width: 90%;
+        max-width: 300px;
+        justify-content: center;
     }
 
-    .message-content {
-        padding: 2rem 1.5rem;
-        border-radius: 20px;
+    .counter-card {
+        padding: 20px 40px;
     }
 
-    .music-toggle {
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
     }
 }
 
 @media (max-width: 480px) {
-    .poem-text {
-        font-size: 1rem;
-    }
-
-    .message-content {
-        padding: 1.5rem 1rem;
-    }
-
-    .close-button {
-        width: 35px;
-        height: 35px;
+    .divider-romantic {
+        gap: 10px;
         font-size: 1.2rem;
     }
+
+    .social-music-controls {
+        gap: 15px;
+    }
+
+    .control-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+}
+
+/* ========================================
+   EFECTOS ADICIONALES
+   ======================================== */
+
+/* Efecto de brillo en hover para todos los iconos */
+i {
+    transition: all 0.3s ease;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-darker);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--color-secondary), var(--color-accent));
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+}
+
+/* Botón de cerrar del modal */
+.btn-close-white {
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.btn-close-white:hover {
+    opacity: 1;
+    transform: rotate(90deg);
 }
