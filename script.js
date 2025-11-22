@@ -1,110 +1,5 @@
 // ========================================
-// INICIALIZACIÓN DE BIBLIOTECAS
-// ========================================
-
-// Inicializar AOS (Animate On Scroll)
-AOS.init({
-    duration: 1200,
-    easing: 'ease-out-cubic',
-    once: false,
-    mirror: true
-});
-
-// ========================================
-// CONFIGURACIÓN DE PARTICLES.JS
-// ========================================
-
-particlesJS('particles-js', {
-    particles: {
-        number: {
-            value: 150,
-            density: {
-                enable: true,
-                value_area: 800
-            }
-        },
-        color: {
-            value: ['#ff69b4', '#ff1493', '#8a2be2', '#ffd700']
-        },
-        shape: {
-            type: ['circle', 'triangle', 'edge'],
-            stroke: {
-                width: 0,
-                color: '#000000'
-            }
-        },
-        opacity: {
-            value: 0.6,
-            random: true,
-            anim: {
-                enable: true,
-                speed: 1,
-                opacity_min: 0.1,
-                sync: false
-            }
-        },
-        size: {
-            value: 4,
-            random: true,
-            anim: {
-                enable: true,
-                speed: 2,
-                size_min: 0.1,
-                sync: false
-            }
-        },
-        line_linked: {
-            enable: true,
-            distance: 150,
-            color: '#ff69b4',
-            opacity: 0.3,
-            width: 1
-        },
-        move: {
-            enable: true,
-            speed: 1.5,
-            direction: 'none',
-            random: true,
-            straight: false,
-            out_mode: 'out',
-            bounce: false,
-            attract: {
-                enable: true,
-                rotateX: 600,
-                rotateY: 1200
-            }
-        }
-    },
-    interactivity: {
-        detect_on: 'canvas',
-        events: {
-            onhover: {
-                enable: true,
-                mode: 'grab'
-            },
-            onclick: {
-                enable: true,
-                mode: 'push'
-            },
-            resize: true
-        },
-        modes: {
-            grab: {
-                distance: 200,
-                line_linked: {
-                    opacity: 0.8
-                }
-            },
-            push: {
-                particles_nb: 4
-            }
-        }
-    },
-    retina_detect: true
-});
-
-// ========================================
-// CONFIGURACIÓN DE THREE.JS
+// VARIABLES GLOBALES
 // ========================================
 
 let scene, camera, renderer;
@@ -112,7 +7,165 @@ let hearts = [];
 let starField;
 let clock = new THREE.Clock();
 
+// ========================================
+// INICIALIZACIÓN PRINCIPAL
+// ========================================
+
+window.addEventListener('load', function() {
+    // Inicializar AOS
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 1200,
+            easing: 'ease-out-cubic',
+            once: false,
+            mirror: true
+        });
+    }
+
+    // Inicializar Particles.js
+    initParticles();
+
+    // Inicializar Three.js
+    initThreeJS();
+
+    // Inicializar efectos de escritura
+    initTypedEffects();
+
+    // Inicializar contador
+    animateCounter();
+
+    // Inicializar interacciones
+    initInteractions();
+
+    // Crear estrellas fugaces
+    createShootingStars();
+
+    // Notificación de bienvenida
+    setTimeout(() => {
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: '✨ Bienvenida a tu universo ✨',
+                text: 'Cada estrella aquí brilla por ti...',
+                icon: 'info',
+                timer: 3000,
+                showConfirmButton: false,
+                background: 'rgba(26, 0, 51, 0.98)',
+                color: '#ffb3d9',
+                backdrop: 'rgba(0, 0, 0, 0.4)'
+            });
+        }
+    }, 1000);
+
+    // Animación de entrada
+    if (typeof gsap !== 'undefined') {
+        gsap.from('body', {
+            opacity: 0,
+            duration: 1,
+            ease: 'power2.out'
+        });
+    }
+});
+
+// ========================================
+// PARTICLES.JS
+// ========================================
+
+function initParticles() {
+    if (typeof particlesJS === 'undefined') return;
+
+    particlesJS('particles-js', {
+        particles: {
+            number: {
+                value: 150,
+                density: {
+                    enable: true,
+                    value_area: 800
+                }
+            },
+            color: {
+                value: ['#ff69b4', '#ff1493', '#8a2be2', '#ffd700']
+            },
+            shape: {
+                type: 'circle'
+            },
+            opacity: {
+                value: 0.6,
+                random: true,
+                anim: {
+                    enable: true,
+                    speed: 1,
+                    opacity_min: 0.1,
+                    sync: false
+                }
+            },
+            size: {
+                value: 4,
+                random: true,
+                anim: {
+                    enable: true,
+                    speed: 2,
+                    size_min: 0.1,
+                    sync: false
+                }
+            },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: '#ff69b4',
+                opacity: 0.3,
+                width: 1
+            },
+            move: {
+                enable: true,
+                speed: 1.5,
+                direction: 'none',
+                random: true,
+                straight: false,
+                out_mode: 'out',
+                bounce: false,
+                attract: {
+                    enable: true,
+                    rotateX: 600,
+                    rotateY: 1200
+                }
+            }
+        },
+        interactivity: {
+            detect_on: 'canvas',
+            events: {
+                onhover: {
+                    enable: true,
+                    mode: 'grab'
+                },
+                onclick: {
+                    enable: true,
+                    mode: 'push'
+                },
+                resize: true
+            },
+            modes: {
+                grab: {
+                    distance: 200,
+                    line_linked: {
+                        opacity: 0.8
+                    }
+                },
+                push: {
+                    particles_nb: 4
+                }
+            }
+        },
+        retina_detect: true
+    });
+}
+
+// ========================================
+// THREE.JS - ESCENA 3D
+// ========================================
+
 function initThreeJS() {
+    if (typeof THREE === 'undefined') return;
+
     // Crear escena
     scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x0a0015, 0.03);
@@ -153,11 +206,9 @@ function initThreeJS() {
 }
 
 function createLights() {
-    // Luz ambiental
     const ambientLight = new THREE.AmbientLight(0xffd1dc, 0.4);
     scene.add(ambientLight);
 
-    // Luces puntuales de colores
     const light1 = new THREE.PointLight(0xff69b4, 2, 50);
     light1.position.set(15, 15, 15);
     scene.add(light1);
@@ -183,7 +234,6 @@ function createHearts3D() {
     heartShape.bezierCurveTo(x + 16, y + 7, x + 16, y, x + 10, y);
     heartShape.bezierCurveTo(x + 7, y, x + 5, y + 5, x + 5, y + 5);
 
-    // Crear múltiples corazones
     for (let i = 0; i < 12; i++) {
         const geometry = new THREE.ExtrudeGeometry(heartShape, {
             depth: 1.2,
@@ -208,25 +258,21 @@ function createHearts3D() {
         const heart = new THREE.Mesh(geometry, material);
         geometry.center();
 
-        // Posición aleatoria
         heart.position.set(
             (Math.random() - 0.5) * 40,
             (Math.random() - 0.5) * 30,
             (Math.random() - 0.5) * 30 - 10
         );
 
-        // Escala aleatoria
         const scale = Math.random() * 0.06 + 0.04;
         heart.scale.set(scale, scale, scale);
 
-        // Rotación inicial
         heart.rotation.set(
             Math.random() * Math.PI,
             Math.random() * Math.PI,
             Math.random() * Math.PI
         );
 
-        // Datos para animación
         heart.userData = {
             rotationSpeed: {
                 x: (Math.random() - 0.5) * 0.02,
@@ -248,42 +294,32 @@ function createStarField3D() {
     const starCount = 4000;
     const positions = new Float32Array(starCount * 3);
     const colors = new Float32Array(starCount * 3);
-    const sizes = new Float32Array(starCount);
 
     for (let i = 0; i < starCount; i++) {
         const i3 = i * 3;
 
-        // Posiciones
         positions[i3] = (Math.random() - 0.5) * 250;
         positions[i3 + 1] = (Math.random() - 0.5) * 250;
         positions[i3 + 2] = (Math.random() - 0.5) * 250;
 
-        // Colores
         const colorChoice = Math.random();
         if (colorChoice < 0.3) {
-            // Rosa
             colors[i3] = 1;
             colors[i3 + 1] = 0.41;
             colors[i3 + 2] = 0.71;
         } else if (colorChoice < 0.6) {
-            // Violeta
             colors[i3] = 0.54;
             colors[i3 + 1] = 0.17;
             colors[i3 + 2] = 0.89;
         } else {
-            // Blanco/Dorado
             colors[i3] = 1;
             colors[i3 + 1] = 0.84 + Math.random() * 0.16;
             colors[i3 + 2] = 0.5 + Math.random() * 0.5;
         }
-
-        // Tamaños
-        sizes[i] = Math.random() * 2 + 0.5;
     }
 
     starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     starGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    starGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
     const starMaterial = new THREE.PointsMaterial({
         size: 0.5,
@@ -303,28 +339,23 @@ function animateThree() {
 
     const elapsedTime = clock.getElapsedTime();
 
-    // Animar corazones
     hearts.forEach((heart, index) => {
         heart.rotation.x += heart.userData.rotationSpeed.x;
         heart.rotation.y += heart.userData.rotationSpeed.y;
         heart.rotation.z += heart.userData.rotationSpeed.z;
 
-        // Movimiento flotante
         heart.position.y += Math.sin(elapsedTime * heart.userData.floatSpeed + heart.userData.floatOffset) * 0.015;
 
-        // Pulso suave
         const pulse = 1 + Math.sin(elapsedTime * 2 + index) * 0.1;
         const scale = heart.userData.baseScale * pulse;
         heart.scale.set(scale, scale, scale);
     });
 
-    // Rotar campo de estrellas
     if (starField) {
         starField.rotation.y += 0.0003;
         starField.rotation.x += 0.0001;
     }
 
-    // Movimiento suave de cámara
     camera.position.x = Math.sin(elapsedTime * 0.3) * 2;
     camera.position.y = Math.cos(elapsedTime * 0.2) * 1;
     camera.lookAt(0, 0, 0);
@@ -342,67 +373,77 @@ function onWindowResize() {
 // TYPED.JS - EFECTOS DE ESCRITURA
 // ========================================
 
-// Subtítulo con efecto typing
-const typedSubtitle = new Typed('#typedSubtitle', {
-    strings: [
-        'Cada latido mío viaja hacia ti, entre estrellas hechas de sueños...',
-        'Tu nombre es mi oración favorita...',
-        'En el infinito de las posibilidades, te elegí a ti...'
-    ],
-    typeSpeed: 60,
-    backSpeed: 30,
-    backDelay: 3000,
-    loop: true,
-    showCursor: true,
-    cursorChar: '|'
-});
+function initTypedEffects() {
+    if (typeof Typed === 'undefined') return;
 
-// Poema con efecto typing (una sola vez)
-setTimeout(() => {
-    const typedPoem = new Typed('#typedPoem', {
-        strings: ['En el silencio de la noche, tu nombre es mi constelación...'],
-        typeSpeed: 80,
-        showCursor: false,
-        onComplete: function() {
-            // Agregar animación de brillo al completar
-            document.getElementById('typedPoem').style.textShadow = '0 0 20px rgba(255, 182, 193, 0.8)';
-        }
+    // Subtítulo con efecto typing
+    new Typed('#typedSubtitle', {
+        strings: [
+            'Cada latido mío viaja hacia ti, entre estrellas hechas de sueños...',
+            'Tu nombre es mi oración favorita...',
+            'En el infinito de las posibilidades, te elegí a ti...'
+        ],
+        typeSpeed: 60,
+        backSpeed: 30,
+        backDelay: 3000,
+        loop: true,
+        showCursor: true,
+        cursorChar: '|'
     });
-}, 3000);
+
+    // Poema con efecto typing
+    setTimeout(() => {
+        new Typed('#typedPoem', {
+            strings: ['En el silencio de la noche, tu nombre es mi constelación...'],
+            typeSpeed: 80,
+            showCursor: false,
+            onComplete: function() {
+                document.getElementById('typedPoem').style.textShadow = '0 0 20px rgba(255, 182, 193, 0.8)';
+            }
+        });
+    }, 3000);
+}
 
 // ========================================
-// CONTADOR DE AMOR (DÍAS)
+// CONTADOR DE AMOR
 // ========================================
 
 function animateCounter() {
     const counterElement = document.getElementById('daysCounter');
-    const targetNumber = 365; // Puedes cambiar esto a la fecha real
+    const targetNumber = 365;
 
-    gsap.to(counterElement, {
-        innerHTML: targetNumber,
-        duration: 3,
-        ease: 'power2.out',
-        snap: { innerHTML: 1 },
-        delay: 2,
-        onUpdate: function() {
-            counterElement.innerHTML = Math.ceil(counterElement.innerHTML);
-        }
-    });
+    if (typeof gsap !== 'undefined') {
+        gsap.to(counterElement, {
+            innerHTML: targetNumber,
+            duration: 3,
+            ease: 'power2.out',
+            snap: { innerHTML: 1 },
+            delay: 2,
+            onUpdate: function() {
+                counterElement.innerHTML = Math.ceil(counterElement.innerHTML);
+            }
+        });
+    } else {
+        // Fallback sin GSAP
+        let current = 0;
+        const increment = targetNumber / 100;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= targetNumber) {
+                current = targetNumber;
+                clearInterval(timer);
+            }
+            counterElement.innerHTML = Math.ceil(current);
+        }, 30);
+    }
 }
 
 // ========================================
 // INTERACCIONES DEL DOM
 // ========================================
 
-document.addEventListener('DOMContentLoaded', function() {
-
-    // Inicializar Three.js
-    initThreeJS();
-
-    // Iniciar animación del contador
-    animateCounter();
-
-    // Bootstrap Modal instances
+function initInteractions() {
+    // Bootstrap Modals
     const secretMessageModal = new bootstrap.Modal(document.getElementById('secretMessageModal'));
     const galleryModal = new bootstrap.Modal(document.getElementById('galleryModal'));
 
@@ -410,24 +451,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('heartButton').addEventListener('click', function() {
         secretMessageModal.show();
 
-        // Animación con GSAP cuando se abre el modal
-        gsap.from('.message-text-modal', {
-            opacity: 0,
-            y: 50,
-            duration: 1,
-            delay: 0.3,
-            ease: 'back.out(1.7)'
-        });
-
-        // SweetAlert alternativo (comentado)
-        // Swal.fire({
-        //     title: 'Para ti, mi amor',
-        //     html: 'Gracias por existir...',
-        //     icon: 'heart',
-        //     confirmButtonText: 'Guardar en mi corazón',
-        //     background: 'rgba(26, 0, 51, 0.95)',
-        //     color: '#ffb3d9'
-        // });
+        if (typeof gsap !== 'undefined') {
+            gsap.from('.message-text-modal', {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                delay: 0.3,
+                ease: 'back.out(1.7)'
+            });
+        }
     });
 
     // Botón de galería
@@ -473,52 +505,49 @@ document.addEventListener('DOMContentLoaded', function() {
         effectsMode++;
         if (effectsMode > 3) effectsMode = 1;
 
-        // Cambiar configuración de particles.js
-        if (effectsMode === 1) {
-            // Modo romántico
-            pJSDom[0].pJS.particles.move.speed = 1.5;
-            pJSDom[0].pJS.particles.number.value = 150;
-        } else if (effectsMode === 2) {
-            // Modo intenso
-            pJSDom[0].pJS.particles.move.speed = 3;
-            pJSDom[0].pJS.particles.number.value = 250;
-        } else {
-            // Modo suave
-            pJSDom[0].pJS.particles.move.speed = 0.8;
-            pJSDom[0].pJS.particles.number.value = 80;
+        if (typeof pJSDom !== 'undefined' && pJSDom[0]) {
+            if (effectsMode === 1) {
+                pJSDom[0].pJS.particles.move.speed = 1.5;
+                pJSDom[0].pJS.particles.number.value = 150;
+            } else if (effectsMode === 2) {
+                pJSDom[0].pJS.particles.move.speed = 3;
+                pJSDom[0].pJS.particles.number.value = 250;
+            } else {
+                pJSDom[0].pJS.particles.move.speed = 0.8;
+                pJSDom[0].pJS.particles.number.value = 80;
+            }
         }
 
-        // Mostrar notificación con SweetAlert
         const modes = ['Romántico', 'Intenso', 'Suave'];
-        Swal.fire({
-            title: `Modo ${modes[effectsMode - 1]}`,
-            icon: 'success',
-            timer: 1500,
-            showConfirmButton: false,
-            background: 'rgba(26, 0, 51, 0.95)',
-            color: '#ffb3d9'
-        });
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: `Modo ${modes[effectsMode - 1]}`,
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+                background: 'rgba(26, 0, 51, 0.95)',
+                color: '#ffb3d9'
+            });
+        }
     });
-
-    // Crear estrellas fugaces periódicamente
-    createShootingStars();
-
-    // Animaciones GSAP en scroll
-    gsap.registerPlugin(ScrollTrigger);
 
     // Efecto parallax con GSAP
-    gsap.to('.main-title', {
-        scrollTrigger: {
-            trigger: '.main-title',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
-        },
-        y: 200,
-        opacity: 0.5,
-        scale: 0.8
-    });
-});
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.to('.main-title', {
+            scrollTrigger: {
+                trigger: '.main-title',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            },
+            y: 200,
+            opacity: 0.5,
+            scale: 0.8
+        });
+    }
+}
 
 // ========================================
 // ESTRELLAS FUGACES
@@ -539,7 +568,6 @@ function createShootingStars() {
         star.style.left = Math.random() * 100 + '%';
         star.style.animation = 'shootingStar 2.5s linear forwards';
 
-        // Crear estela
         const trail = document.createElement('div');
         trail.style.position = 'absolute';
         trail.style.width = '100px';
@@ -556,7 +584,6 @@ function createShootingStars() {
         }, 2500);
     }
 
-    // Crear estrella fugaz cada 3-6 segundos
     function scheduleNextStar() {
         const delay = Math.random() * 3000 + 3000;
         setTimeout(() => {
@@ -569,12 +596,11 @@ function createShootingStars() {
 }
 
 // ========================================
-// EFECTOS DE CURSOR PERSONALIZADOS
+// EFECTOS DE CURSOR
 // ========================================
 
 document.addEventListener('mousemove', function(e) {
-    // Crear pequeñas partículas de corazones al mover el mouse (opcional)
-    if (Math.random() > 0.95) {
+    if (Math.random() > 0.97) {
         const heart = document.createElement('div');
         heart.innerHTML = '❤️';
         heart.style.position = 'fixed';
@@ -597,36 +623,3 @@ document.addEventListener('mousemove', function(e) {
         }, 1000);
     }
 });
-
-// ========================================
-// PRELOADER (OPCIONAL)
-// ========================================
-
-window.addEventListener('load', function() {
-    // Animación de entrada con GSAP
-    gsap.from('body', {
-        opacity: 0,
-        duration: 1,
-        ease: 'power2.out'
-    });
-
-    // Notificación de bienvenida con SweetAlert
-    setTimeout(() => {
-        Swal.fire({
-            title: '✨ Bienvenida a tu universo ✨',
-            text: 'Cada estrella aquí brilla por ti...',
-            icon: 'info',
-            timer: 3000,
-            showConfirmButton: false,
-            background: 'rgba(26, 0, 51, 0.98)',
-            color: '#ffb3d9',
-            backdrop: 'rgba(0, 0, 0, 0.4)'
-        });
-    }, 1000);
-});
-
-// ========================================
-// EXPORTAR FUNCIONES (si se necesita)
-// ========================================
-
-export { initThreeJS, createShootingStars, animateCounter };
