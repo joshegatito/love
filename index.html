@@ -4,73 +4,228 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Un universo de amor creado para ti">
-    <title>Eres mi Universo d</title>
+    <title>Eres mi Universo ‚ù§Ô∏è</title>
 
-    <!-- Fuentes rom·nticas de Google Fonts -->
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Animate.css para animaciones profesionales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Fuentes rom√°nticas de Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Crimson+Text:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&family=Dancing+Script:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Crimson+Text:ital@0;1&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 
-    <!-- Three.js desde CDN oficial -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <!-- Font Awesome para iconos profesionales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- GSAP para animaciones avanzadas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
+
+    <!-- Particles.js para efectos de part√≠culas -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- Three.js (versi√≥n estable) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Typed.js para efecto de escritura -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.16"></script>
+
+    <!-- SweetAlert2 para modales hermosos -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Part√≠culas de fondo -->
+    <div id="particles-js"></div>
+
     <!-- Canvas para Three.js -->
     <canvas id="universeCanvas"></canvas>
 
-    <!-- Contenedor de contenido rom·ntico -->
-    <div class="content-overlay">
+    <!-- Contenedor principal con Bootstrap -->
+    <div class="container-fluid content-overlay">
+        <div class="row min-vh-100 align-items-center justify-content-center">
+            <div class="col-12 text-center">
 
-        <!-- TÌtulo principal -->
-        <h1 class="main-title fade-in">Eres mi Universo</h1>
+                <!-- T√≠tulo principal con animaci√≥n -->
+                <h1 class="main-title animate__animated animate__fadeInDown animate__delay-1s"
+                    data-aos="zoom-in"
+                    data-aos-duration="2000">
+                    <i class="fas fa-heart heart-icon-left"></i>
+                    Eres mi Universo
+                    <i class="fas fa-heart heart-icon-right"></i>
+                </h1>
 
-        <!-- SubtÌtulo poÈtico -->
-        <p class="subtitle fade-in-delay">Cada latido mÌo viaja hacia ti, entre estrellas hechas de sueÒos.</p>
+                <!-- Subt√≠tulo po√©tico con typing effect -->
+                <div class="subtitle-container" data-aos="fade-up" data-aos-delay="500">
+                    <p class="subtitle animate__animated animate__fadeIn animate__delay-2s">
+                        <span id="typedSubtitle"></span>
+                    </p>
+                </div>
 
-        <!-- Poema con efecto typing -->
-        <div class="poem-container">
-            <p class="poem-text" id="poemText"></p>
-        </div>
+                <!-- Separador decorativo -->
+                <div class="divider-romantic my-4" data-aos="zoom-in" data-aos-delay="1000">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-star"></i>
+                </div>
 
-        <!-- BotÛn rom·ntico -->
-        <button class="romantic-button" id="heartButton">
-            <span class="button-glow"></span>
-            Toca mi corazÛn
-        </button>
+                <!-- Poema con efecto typing -->
+                <div class="poem-container my-5" data-aos="fade-up" data-aos-delay="1500">
+                    <p class="poem-text" id="typedPoem"></p>
+                </div>
 
-        <!-- Mensaje secreto (oculto inicialmente) -->
-        <div class="secret-message" id="secretMessage">
-            <div class="message-content">
-                <h2 class="message-title">Para ti, mi amor</h2>
-                <p class="message-text">
-                    Gracias por existir. Tu luz da sentido a mis dÌas.<br><br>
-                    Eres la razÛn por la que sonrÌo sin razÛn,<br>
-                    la melodÌa que alegra mi corazÛn,<br>
-                    y el sueÒo m·s hermoso que nunca quiero despertar.<br><br>
-                    En este universo infinito, t˙ eres mi estrella m·s brillante.
-                </p>
-                <button class="close-button" id="closeButton"></button>
+                <!-- Contador de amor (d√≠as juntos) -->
+                <div class="love-counter my-4" data-aos="flip-up" data-aos-delay="2000">
+                    <div class="counter-card">
+                        <i class="fas fa-infinity counter-icon"></i>
+                        <h3 class="counter-number" id="daysCounter">0</h3>
+                        <p class="counter-label">Momentos m√°gicos contigo</p>
+                    </div>
+                </div>
+
+                <!-- Botones de acci√≥n -->
+                <div class="buttons-container mt-5" data-aos="zoom-in" data-aos-delay="2500">
+                    <button class="romantic-button btn-primary-custom me-3" id="heartButton">
+                        <i class="fas fa-heart-pulse"></i>
+                        <span>Toca mi coraz√≥n</span>
+                    </button>
+
+                    <button class="romantic-button btn-secondary-custom" id="galleryButton">
+                        <i class="fas fa-images"></i>
+                        <span>Nuestra Galer√≠a</span>
+                    </button>
+                </div>
+
+                <!-- Redes sociales / M√∫sica -->
+                <div class="social-music-controls mt-5" data-aos="fade-up" data-aos-delay="3000">
+                    <button class="control-btn" id="musicToggle" title="M√∫sica ambiente">
+                        <i class="fas fa-music" id="musicIcon"></i>
+                    </button>
+
+                    <button class="control-btn" id="fullscreenBtn" title="Pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+
+                    <button class="control-btn" id="effectsBtn" title="Cambiar efectos">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                    </button>
+                </div>
+
             </div>
         </div>
+    </div>
 
-        <!-- Control de m˙sica -->
-        <button class="music-toggle" id="musicToggle" title="Activar m˙sica ambiente">
-            <span id="musicIcon">=</span>
-        </button>
+    <!-- Modal de mensaje secreto (Bootstrap) -->
+    <div class="modal fade" id="secretMessageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content modal-romantic">
+                <div class="modal-header border-0">
+                    <h2 class="modal-title w-100 text-center">
+                        <i class="fas fa-envelope-open-heart"></i>
+                        Para ti, mi amor
+                    </h2>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="message-content-modal">
+                        <p class="message-text-modal">
+                            <i class="fas fa-quote-left quote-icon"></i>
+                            Gracias por existir. Tu luz da sentido a mis d√≠as.<br><br>
+                            Eres la raz√≥n por la que sonr√≠o sin raz√≥n,<br>
+                            la melod√≠a que alegra mi coraz√≥n,<br>
+                            y el sue√±o m√°s hermoso del que nunca quiero despertar.<br><br>
+                            En este universo infinito, t√∫ eres mi estrella m√°s brillante.
+                            <i class="fas fa-quote-right quote-icon"></i>
+                        </p>
 
+                        <!-- Corazones flotantes en el modal -->
+                        <div class="floating-hearts-modal">
+                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <button class="romantic-button btn-primary-custom" data-bs-dismiss="modal">
+                        <i class="fas fa-heart"></i>
+                        <span>Guardar en mi coraz√≥n</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de galer√≠a -->
+    <div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content modal-romantic">
+                <div class="modal-header border-0">
+                    <h2 class="modal-title w-100 text-center">
+                        <i class="fas fa-camera-retro"></i>
+                        Nuestros Momentos
+                    </h2>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="gallery-grid">
+                        <!-- Aqu√≠ puedes agregar tus fotos -->
+                        <div class="gallery-item" data-aos="zoom-in">
+                            <div class="gallery-placeholder">
+                                <i class="fas fa-heart"></i>
+                                <p>Foto 1</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="gallery-placeholder">
+                                <i class="fas fa-heart"></i>
+                                <p>Foto 2</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
+                            <div class="gallery-placeholder">
+                                <i class="fas fa-heart"></i>
+                                <p>Foto 3</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
+                            <div class="gallery-placeholder">
+                                <i class="fas fa-heart"></i>
+                                <p>Foto 4</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Estrellas fugaces -->
     <div class="shooting-stars"></div>
 
-    <!-- Audio ambiente (opcional) -->
+    <!-- Audio ambiente -->
     <audio id="ambientMusic" loop>
-        <!-- Puedes agregar tu propia m˙sica aquÌ -->
         <!-- <source src="ambient-music.mp3" type="audio/mpeg"> -->
     </audio>
 
-    <script src="script.js"></script>
+    <!-- Bootstrap 5.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Script principal -->
+    <script type="module" src="script.js"></script>
+
 </body>
 </html>
