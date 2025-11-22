@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Un universo de amor creado para ti">
+    <title>Eres mi Universo d</title>
+
+    <!-- Fuentes románticas de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Crimson+Text:ital@0;1&display=swap" rel="stylesheet">
+
+    <!-- Three.js desde CDN oficial -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Canvas para Three.js -->
+    <canvas id="universeCanvas"></canvas>
+
+    <!-- Contenedor de contenido romántico -->
+    <div class="content-overlay">
+
+        <!-- Título principal -->
+        <h1 class="main-title fade-in">Eres mi Universo</h1>
+
+        <!-- Subtítulo poético -->
+        <p class="subtitle fade-in-delay">Cada latido mío viaja hacia ti, entre estrellas hechas de sueños.</p>
+
+        <!-- Poema con efecto typing -->
+        <div class="poem-container">
+            <p class="poem-text" id="poemText"></p>
+        </div>
+
+        <!-- Botón romántico -->
+        <button class="romantic-button" id="heartButton">
+            <span class="button-glow"></span>
+            Toca mi corazón
+        </button>
+
+        <!-- Mensaje secreto (oculto inicialmente) -->
+        <div class="secret-message" id="secretMessage">
+            <div class="message-content">
+                <h2 class="message-title">Para ti, mi amor</h2>
+                <p class="message-text">
+                    Gracias por existir. Tu luz da sentido a mis días.<br><br>
+                    Eres la razón por la que sonrío sin razón,<br>
+                    la melodía que alegra mi corazón,<br>
+                    y el sueño más hermoso que nunca quiero despertar.<br><br>
+                    En este universo infinito, tú eres mi estrella más brillante.
+                </p>
+                <button class="close-button" id="closeButton"></button>
+            </div>
+        </div>
+
+        <!-- Control de música -->
+        <button class="music-toggle" id="musicToggle" title="Activar música ambiente">
+            <span id="musicIcon">=</span>
+        </button>
+
+    </div>
+
+    <!-- Estrellas fugaces -->
+    <div class="shooting-stars"></div>
+
+    <!-- Audio ambiente (opcional) -->
+    <audio id="ambientMusic" loop>
+        <!-- Puedes agregar tu propia música aquí -->
+        <!-- <source src="ambient-music.mp3" type="audio/mpeg"> -->
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
